@@ -1,0 +1,51 @@
+CREATE TABLE patients (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(50),
+  last_name VARCHAR(50),
+  email VARCHAR(100) UNIQUE,
+  password_hash VARCHAR(255),
+  phone VARCHAR(20),
+  date_of_birth DATE,
+  gender ENUM('male', 'female', 'other'),
+  address TEXT
+);
+
+CREATE TABLE doctors (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(50),
+  last_name VARCHAR(50),
+  specialization VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  phone VARCHAR(20),
+  schedule TEXT
+);
+
+CREATE TABLE appointments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  patient_id INT,
+  doctor_id INT,
+  appointment_date DATE,
+  appointment_time TIME,
+  status ENUM('scheduled', 'completed', 'canceled'),
+  FOREIGN KEY (patient_id) REFERENCES patients(id),
+  FOREIGN KEY (doctor_id) REFERENCES doctors(id)
+);
+
+CREATE TABLE admin (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) UNIQUE,
+  password_hash VARCHAR(255),
+  role ENUM('admin')
+);
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'newpassword';
+SHOW GRANTS FOR 'root'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost';
+FLUSH PRIVILEGES;
+
+SELECT * FROM patients WHERE id = 1;  -- Replace 1 with the actual patient_id you're using
+SELECT * FROM doctors WHERE id = 1;  -- Replace 1 with the actual patient_id you're using
+
+
+
+
